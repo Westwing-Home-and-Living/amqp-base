@@ -2,7 +2,9 @@
 
 namespace Test\Amqp\Base\Config\Loader;
 
-class YamlFileLoaderTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class YamlFileLoaderTest extends TestCase
 {
     /**
      * Test configuration load with imports
