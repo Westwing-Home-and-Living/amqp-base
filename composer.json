@@ -16,17 +16,17 @@
     ],
 
     "require": {
-        "symfony/yaml": "2.*",
-        "symfony/config": "2.6.*"
+        "symfony/config": "^4.2",
+        "symfony/yaml": "^4.2"
     },
     "require-dev": {
-        "symfony/dependency-injection": "2.*",
-        "phpunit/phpunit": "4.6.*"
+        "phpunit/phpunit": "^7.5",
+        "symfony/dependency-injection": "^4.2"
     },
     "autoload": {
         "psr-0": {
             "Amqp":         "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

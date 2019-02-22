@@ -2,6 +2,8 @@
 namespace Amqp\Base\Config;
 
 use Amqp\Base\Config\Interfaces\NamedConfigInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -12,8 +14,9 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('amqp');
+        $treeBuilder = new TreeBuilder('amqp');
+        /* @var ArrayNodeDefinition|NodeDefinition $rootNode */
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->ignoreExtraKeys()
@@ -164,21 +167,12 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
                             ->arrayNode('arguments')
                                 ->children()
                                     ->integerNode('message_ttl')
-                                        ->cannotBeEmpty()
-                                    ->end()
-                                    ->integerNode('expires')
-                                        ->cannotBeEmpty()
+                                        ->min(-1)
                                     ->end()
                                     ->scalarNode('dl_exchange')
                                         ->cannotBeEmpty()
                                     ->end()
                                     ->scalarNode('dl_routingKey')
-                                        ->cannotBeEmpty()
-                                    ->end()
-                                    ->integerNode('max_length')
-                                        ->cannotBeEmpty()
-                                    ->end()
-                                    ->integerNode('max_bytes')
                                         ->cannotBeEmpty()
                                     ->end()
                                 ->end()
