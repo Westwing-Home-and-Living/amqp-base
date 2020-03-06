@@ -12,8 +12,12 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('amqp');
+        $treeBuilder = new TreeBuilder("amqp");
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('amqp');
+        }
 
         $rootNode
             ->ignoreExtraKeys()
@@ -47,7 +51,7 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
                                 ->defaultValue(0.2)
                             ->end()
                             ->integerNode('heartbeat')
-                                ->defaultValue(10)
+                                ->defaultValue(0)
                             ->end()
                         ->end()
                     ->end()
@@ -164,10 +168,8 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
                             ->arrayNode('arguments')
                                 ->children()
                                     ->integerNode('message_ttl')
-                                        ->cannotBeEmpty()
                                     ->end()
                                     ->integerNode('expires')
-                                        ->cannotBeEmpty()
                                     ->end()
                                     ->scalarNode('dl_exchange')
                                         ->cannotBeEmpty()
@@ -176,10 +178,8 @@ class Amqp implements ConfigurationInterface, NamedConfigInterface
                                         ->cannotBeEmpty()
                                     ->end()
                                     ->integerNode('max_length')
-                                        ->cannotBeEmpty()
                                     ->end()
                                     ->integerNode('max_bytes')
-                                        ->cannotBeEmpty()
                                     ->end()
                                 ->end()
                             ->end()
